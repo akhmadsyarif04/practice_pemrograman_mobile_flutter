@@ -7,7 +7,7 @@ import '../providers/product.dart';
 class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final productData = Provider.of<Product>(context);
+    final productData = Provider.of<Product>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -25,15 +25,16 @@ class ProductItem extends StatelessWidget {
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
-          leading: IconButton(
-            icon: (productData.isFavorite)
-                ? Icon(Icons.favorite)
-                : Icon(Icons.favorite_border_outlined),
-            color: Colors.amber,
-            onPressed: () {
-              productData.statusFavorite();
-            },
-          ),
+          leading: Consumer<Product>(
+              builder: (context, productData, child) => IconButton(
+                    icon: (productData.isFavorite)
+                        ? Icon(Icons.favorite)
+                        : Icon(Icons.favorite_border_outlined),
+                    color: Colors.amber,
+                    onPressed: () {
+                      productData.statusFavorite();
+                    },
+                  )),
           title: Text(
             productData.title_product.toString(),
             textAlign: TextAlign.center,
