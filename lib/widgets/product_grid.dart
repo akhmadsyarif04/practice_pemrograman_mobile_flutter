@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/all_products.dart';
 
-import '../models/product.dart';
+import '../providers/product.dart';
 import '../widgets/product_item.dart';
 
 class ProductGrid extends StatelessWidget {
@@ -19,10 +19,10 @@ class ProductGrid extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       itemCount: all_product.length,
       itemBuilder: (ctx, i) {
-        return ProductItem(
-          all_product[i].id!,
-          all_product[i].title_product!,
-          all_product[i].imageUrl!,
+        return ChangeNotifierProvider.value(
+          value: all_product[i],
+          // create: (context) => all_product[i],
+          child: ProductItem(),
         );
       },
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
